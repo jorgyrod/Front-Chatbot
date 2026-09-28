@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import type { Message } from "../types";
+import type { Message, Turn } from "../types";
 import { asking } from "../service/api";
 import ChatMessage from "./ChatMessage.vue";
 import ChatInput from "./ChatInput.vue";
@@ -49,6 +49,11 @@ const error = ref("");
 async function sendMessage(text: string) {
   error.value = "";
 
+  const history: Turn[] = messages.value.map((msg) => ({
+    role: msg.author === "user" ? "user" : "assistant",
+    content: msg.text,
+  }));
+
   messages.value.push({
     author: "user",
     text,
@@ -57,12 +62,14 @@ async function sendMessage(text: string) {
   isLoading.value = true;
 
   try {
-    const response = await asking(userId.value, text);
+    const response = await asking(userId.value, text, history);
 
     messages.value.push({
-      author: "bot",
+      author: "assistant",
       text: response.answer,
       sources: response.sources || [],
+      searchLikely:
+        response.searchedFor !== text ? response.searchedFor : undefined,
     });
   } catch (err) {
     error.value = (err as Error).message;

@@ -6,13 +6,16 @@ export type Source = {
 };
 
 export type Message = {
-  author: "user" | "bot";
+  author: "user" | "assistant";
   text: string;
   sources?: Source[];
-  searchWith?: string;
+  searchLikely?: string;
 };
 
 export type ChatResponse = {
   answer: string;
   sources?: Source[];
+  searchedFor: string;
 };
+
+export type Turn = { role: "user" | "assistant"; content: string };

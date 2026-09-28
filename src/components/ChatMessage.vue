@@ -3,6 +3,10 @@
     <div class="burble">
       <p class="text">{{ message.text }}</p>
 
+      <p v-if="message.searchLikely" class="search-likely">
+        Probablemente buscó: {{ message.searchLikely }}
+      </p>
+
       <div v-if="message.sources && message.sources.length > 0" class="sources">
         <span class="sources-title">Fuentes:</span>
         <span
@@ -76,5 +80,15 @@ defineProps<{
   background: #f3f4f6;
   border-radius: 6px;
   padding: 2px 6px;
+}
+
+.search-likely {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: #7c6f00;
+  background: #fffbe6;
+  border: 1px solid #f5e6a3;
+  border-radius: 6px;
+  padding: 4px 8px;
 }
 </style>
