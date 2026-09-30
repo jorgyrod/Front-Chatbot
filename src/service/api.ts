@@ -1,6 +1,6 @@
 import type { ChatResponse } from "../types";
 import type { Turn } from "../types";
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL ?? "http://100.55.33.236:3000";
 
 export async function asking(
   userId: string,
